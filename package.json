@@ -1,0 +1,19 @@
+{
+  "name": "cli-task",
+  "version": "0.1.0",
+  "repository": "https://github.com/astoilkov/cli-task",
+  "description": "",
+  "license": "MIT",
+  "author": {
+    "name": "Antonio Stoilkov",
+    "email": "antonio.stoilkov@gmail.com",
+    "url": "http://astoilkov.com"
+  },
+  "scripts": {
+    "tsc": "tsc --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "2.9.2"
+  }
+}
