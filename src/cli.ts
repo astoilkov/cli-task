@@ -18,6 +18,10 @@ try {
 
 let task = require(taskPath.replace(/.js$/, ''));
 
+if (task && task.default && task.default instanceof Task) {
+  task = task.default;
+}
+
 if (task instanceof Task) {
   task.exec({
     print: argv.hasOwnProperty('print') ? argv.print : true,
