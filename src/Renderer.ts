@@ -52,8 +52,8 @@ export class Renderer {
       cliCursor.show();
     });
 
-    console.log = () => {
-      this.logs.push(Array.from(arguments).map(value => inspect(value, { colors: true })).join(' '));
+    console.log = (...args: any[]) => {
+      this.logs.push(args.map(value => inspect(value, { colors: true })).join(' '));
     };
 
     if (this.options.animate) {
