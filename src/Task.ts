@@ -97,7 +97,7 @@ export default class Task {
         resolve();
       }
 
-      if (result instanceof Promise) {
+      if (result && result.then instanceof Function && result.catch instanceof Function) {
         result.then(done).catch(err => step.failure(err));
       } else if (step.child) {
         this.execTasks(step.child).then(done);
