@@ -135,7 +135,6 @@ export class Renderer {
 
     switch (step.status) {
       case StepStatus.Initial:
-        text += ' ';
         break;
       case StepStatus.Running:
         text += process.platform == 'win32'
