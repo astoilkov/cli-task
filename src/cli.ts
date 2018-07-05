@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import Task from './Task';
 import { join } from 'path';
 import { accessSync } from 'fs';
 import * as minimist from 'minimist';
@@ -18,11 +17,11 @@ try {
 
 let task = require(taskPath.replace(/.js$/, ''));
 
-if (task && task.default && task.default instanceof Task) {
+if (task && isTask(task.default)) {
   task = task.default;
 }
 
-if (task instanceof Task) {
+if (isTask(task)) {
   task.exec({
     print: argv.hasOwnProperty('print') ? argv.print : true,
     colors: argv.hasOwnProperty('colors') ? argv.colors : process.stdout.isTTY,
@@ -31,4 +30,9 @@ if (task instanceof Task) {
 } else {
   process.stderr.write(`${taskPath} doesn't module.exports a Task instance`);
   process.exit(1);
+}
+
+function isTask(obj: any) {
+  return obj && typeof obj.exec == 'function' && typeof obj.add == 'function' &&
+    typeof obj.withOptions == 'function' && Array.isArray(obj.steps);
 }
