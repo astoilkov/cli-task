@@ -1,3 +1,3 @@
 import Task from './src/Task';
 
-export default () => new Task();
+module.exports = () => new Task();
