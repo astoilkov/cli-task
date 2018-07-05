@@ -9,6 +9,10 @@
     "email": "antonio.stoilkov@gmail.com",
     "url": "http://astoilkov.com"
   },
+  "bin": {
+    "rn": "cli.js",
+    "cli-task": "cli.js"
+  },
   "scripts": {
     "prepare": "tsc",
     "tsc": "tsc --watch"
