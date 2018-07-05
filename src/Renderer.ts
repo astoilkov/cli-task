@@ -1,6 +1,6 @@
 import Task from './Task';
 import * as figures from 'figures';
-import { inspect } from 'util';
+import { format, inspect } from 'util';
 import * as cliCursor from 'cli-cursor';
 import * as logUpdate from 'log-update';
 import chalk, { Chalk } from 'chalk';
@@ -52,7 +52,14 @@ export class Renderer {
     });
 
     console.log = (...args: any[]) => {
-      this.logs.push(args.map(value => inspect(value, { colors: true })).join(' '));
+      let toString = (value: any) => {
+        if (typeof value == 'string') {
+          return format(value);
+        } else {
+          return inspect(value, { colors: true });
+        }
+      }
+      this.logs.push(args.map(value => toString(value)).join(' '));
     };
 
     if (this.options.animate) {
