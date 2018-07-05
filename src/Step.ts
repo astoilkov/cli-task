@@ -26,10 +26,10 @@ export interface IStepCurrentState {
 }
 
 export enum StepStatus {
-  Initial,
-  Running,
-  Success,
-  Failure
+  Initial = 'initial',
+  Running = 'running',
+  Success = 'success',
+  Failure = 'failure',
 }
 
 export class Step {
