@@ -6,7 +6,6 @@ import * as logUpdate from 'log-update';
 import chalk, { Chalk } from 'chalk';
 import { Step, StepStatus } from './Step';
 
-// TODO: include this https://github.com/sindresorhus/loud-rejection - instead of doing it manyally by myself
 // TODO: include https://github.com/sindresorhus/term-size when not enough rows
 
 const spinnerFrames = [
