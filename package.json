@@ -13,6 +13,13 @@
     "prepublish": "tsc",
     "tsc": "tsc --watch"
   },
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "cli",
+    "cli-app"
+  ],
   "dependencies": {
     "chalk": "2.4.1",
     "cli-cursor": "2.1.0",
