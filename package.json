@@ -10,8 +10,8 @@
     "url": "http://astoilkov.com"
   },
   "bin": {
-    "rn": "cli.js",
-    "cli-task": "cli.js"
+    "rn": "src/cli.js",
+    "cli-task": "src/cli.js"
   },
   "scripts": {
     "prepare": "tsc",
