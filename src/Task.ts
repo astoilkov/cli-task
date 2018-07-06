@@ -8,10 +8,10 @@ export default class Task {
   private stateValues: { [key: string]: any; } = {};
 
   constructor() {
-    let handleError = (err: Error) => {
+    let handleError = (err?: Error) => {
       if (this.getCurrentStep()) {
         this.getCurrentStep().failure(err);
-      } else {
+      } else if (err instanceof Error) {
         throw err;
       }
 
@@ -91,13 +91,9 @@ export default class Task {
 
       if (step.status == StepStatus.Failure) {
         reject();
-      }
-
-      if (step.concurrent && step.status != StepStatus.Failure) {
+      } else if (step.concurrent) {
         resolve();
-      }
-
-      if (result && result.then instanceof Function && result.catch instanceof Function) {
+      } else if (result && result.then instanceof Function && result.catch instanceof Function) {
         result.then(done).catch((err: Error) => step.failure(err));
       } else if (step.child) {
         this.execTasks(step.child).then(done);
