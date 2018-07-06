@@ -118,19 +118,17 @@ export default class Task {
     }
 
     return {
-      global: {
-        argv: argv,
-        get: (key: string) => this.stateValues[key],
-        set: (key: string, value: any) => this.stateValues[key] = value,
+      argv: argv,
+      options: options,
+
+      get: (key: string) => this.stateValues[key],
+      set: (key: string, value: any) => this.stateValues[key] = value,
+
+      info: (message: string) => {
+        this.getCurrentTask().info = message;
       },
-      current: {
-        options: options,
-        info: (message: string) => {
-          this.getCurrentTask().info = message;
-        },
-        fail: (message?: string) => {
-          this.getCurrentTask().failure(message);
-        }
+      fail: (message?: string) => {
+        this.getCurrentTask().failure(message);
       }
     };
   }

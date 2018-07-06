@@ -9,20 +9,14 @@ export interface IStepOptions {
 }
 
 export interface IStepState {
-  global: IStepGlobalState;
-  current: IStepCurrentState;
-}
-
-export interface IStepGlobalState {
   argv: ParsedArgs;
+  options: { [key: string]: any };
+
   get(name: string): any;
   set(name: string, value: any): void;
-}
 
-export interface IStepCurrentState {
   info(message: string): void;
   fail(message?: string): void;
-  options: { [key: string]: any };
 }
 
 export enum StepStatus {
