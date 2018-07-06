@@ -1,3 +1,3 @@
 import Task from './src/Task';
 
-export = () => new Task();
+export = (): Task => new Task();
