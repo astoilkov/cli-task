@@ -25,6 +25,7 @@
     "cli-app"
   ],
   "dependencies": {
+    "@types/minimist": "1.2.0",
     "chalk": "2.4.1",
     "cli-cursor": "2.1.0",
     "figures": "2.0.0",
@@ -34,7 +35,6 @@
   "devDependencies": {
     "@types/figures": "2.0.0",
     "@types/log-update": "2.0.0",
-    "@types/minimist": "1.2.0",
     "typescript": "2.9.2"
   }
 }
