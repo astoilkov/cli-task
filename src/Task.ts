@@ -9,8 +9,8 @@ export default class Task {
 
   constructor() {
     let handleError = (err: Error) => {
-      if (this.getCurrentTask()) {
-        this.getCurrentTask().failure(err);
+      if (this.getCurrentStep()) {
+        this.getCurrentStep().failure(err);
       } else {
         throw err;
       }
@@ -49,7 +49,7 @@ export default class Task {
     this.options = options;
   }
 
-  private getCurrentTask() {
+  private getCurrentStep() {
     let queue = this.steps.slice();
 
     while (queue.length) {
@@ -125,10 +125,10 @@ export default class Task {
       set: (key: string, value: any) => this.stateValues[key] = value,
 
       info: (message: string) => {
-        this.getCurrentTask().info = message;
+        this.getCurrentStep().info = message;
       },
       fail: (message?: string) => {
-        this.getCurrentTask().failure(message);
+        this.getCurrentStep().failure(message);
       }
     };
   }
