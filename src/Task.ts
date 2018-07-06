@@ -47,6 +47,8 @@ export default class Task {
 
   withOptions(options: { [key: string]: any; }) {
     this.options = options;
+
+    return this;
   }
 
   private getCurrentStep() {
