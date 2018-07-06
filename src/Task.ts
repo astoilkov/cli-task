@@ -53,13 +53,13 @@ export default class Task {
     let queue = this.steps.slice();
 
     while (queue.length) {
-      let task = queue.pop();
+      let step = queue.pop();
 
-      if (task.status == StepStatus.Running) {
-        if (task.child) {
-          queue.push(...task.child.steps);
+      if (step.status == StepStatus.Running) {
+        if (step.child) {
+          queue.push(...step.child.steps);
         } else {
-          return task;
+          return step;
         }
       }
     }
