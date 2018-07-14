@@ -80,7 +80,6 @@ export class Renderer {
       }
     }
 
-
     let text = '';
 
     text += '\n';
