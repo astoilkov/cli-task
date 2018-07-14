@@ -57,7 +57,7 @@ export default class Task {
     while (queue.length) {
       let step = queue.pop();
 
-      if (step.status == StepStatus.Running) {
+      if (step.status == StepStatus.Running || step.status == StepStatus.Failure) {
         if (step.child) {
           queue.push(...step.child.steps);
         } else {
