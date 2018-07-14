@@ -128,7 +128,7 @@ export class Renderer {
         text += '\n';
       }
       if (step.child) {
-        text += this.getTextAtLevel(step.child, level + 1);
+        text += this.getTextAtLevel(step.child, step.name ? level + 1 : level);
       }
     });
 
