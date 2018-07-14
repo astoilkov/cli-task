@@ -2,7 +2,7 @@
   "name": "cli-task",
   "version": "0.5.3",
   "repository": "https://github.com/astoilkov/cli-task",
-  "description": "",
+  "description": "Task runner for developers minimalists",
   "license": "MIT",
   "author": {
     "name": "Antonio Stoilkov",
@@ -10,7 +10,7 @@
     "url": "http://astoilkov.com"
   },
   "bin": {
-    "rn": "src/cli.js",
+    "r": "src/cli.js",
     "cli-task": "src/cli.js"
   },
   "scripts": {
@@ -22,7 +22,16 @@
   },
   "keywords": [
     "cli",
-    "cli-app"
+    "cli-app",
+    "task",
+    "runner",
+    "build",
+    "terminal",
+    "minify",
+    "uglify",
+    "grunt",
+    "gulp",
+    "listr"
   ],
   "dependencies": {
     "@types/minimist": "1.2.0",
