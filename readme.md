@@ -76,7 +76,7 @@ The callback function which will be executed.
 
 Execute the task
 
-### options
+#### options
 Type: `Object`
 
 ##### print
