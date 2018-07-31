@@ -11,6 +11,7 @@ $ npm install cli-task
 
 ```javascript
 const execa = require('execa');
+const chalk = require('chalk');
 const task = require('cli-task');
 const jetpack = require('fs-jetpack');
 const tmpPath = path.join(os.tmpdir(), 'dependency-size');
@@ -42,7 +43,7 @@ task()
         name: 'measure size',
         exec: (state) => {
             return jetpack.inspectTreeAsync(tmpPath).then(tree => {
-                console.log(chalk.white(prettyBytes(tree.size)));  
+                console.log(chalk.white(prettyBytes(tree.size)));
             });
         }
     })
