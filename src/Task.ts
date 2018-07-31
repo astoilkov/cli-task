@@ -46,9 +46,13 @@ export default class Task {
   }
 
   withOptions(options: { [key: string]: any; }) {
-    this.options = options;
+    let copy = new Task();
 
-    return this;
+    copy.options = options;
+    copy.steps = this.steps;
+    copy.stateValues = this.stateValues;
+
+    return copy;
   }
 
   private getCurrentStep() {
