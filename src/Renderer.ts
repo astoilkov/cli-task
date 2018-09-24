@@ -33,6 +33,7 @@ export class Renderer {
   private logs: string[] = [];
   private options: IRendererOptions;
   private intervalId: NodeJS.Timer;
+  private lastRenderedText: string;
   private lastSpinnerUpdate: number;
   private spinnerFrameIndex: number = 0;
 
@@ -94,7 +95,11 @@ export class Renderer {
       text += '\n';
     }
 
-    logUpdate(text);
+    if (this.lastRenderedText != text) {
+      logUpdate(text);
+    }
+
+    this.lastRenderedText = text;
   }
 
   private getErrorsText() {
