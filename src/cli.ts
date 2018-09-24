@@ -22,6 +22,9 @@ if (task && isTask(task.default)) {
 }
 
 if (isTask(task)) {
+  // update argv to enable changing arguments from the loaded task
+  argv = minimist(process.argv.slice(2));
+
   task.exec({
     print: argv.hasOwnProperty('print') ? argv.print == 'true' : true,
     colors: argv.hasOwnProperty('colors') ? argv.colors == 'true' : process.stdout.isTTY,
