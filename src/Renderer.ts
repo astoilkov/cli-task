@@ -62,7 +62,7 @@ export class Renderer {
       this.logs.push(args.map(value => toString(value)).join(' '));
     };
 
-    if (this.options.animate) {
+    if (this.options.print) {
       this.update();
       cliCursor.hide();
       this.intervalId = setInterval(() => this.update(), 60);
@@ -143,7 +143,7 @@ export class Renderer {
         text += ' ';
         break;
       case StepStatus.Running:
-        text += process.platform == 'win32'
+        text += process.platform == 'win32' || !this.options.animate
           ? this.chalk.yellow(figures.play)
           : this.chalk.yellow(spinnerFrames[this.spinnerFrameIndex]);
         break;
