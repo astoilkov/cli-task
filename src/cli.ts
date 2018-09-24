@@ -4,7 +4,9 @@ import { join } from 'path';
 import { accessSync } from 'fs';
 import * as minimist from 'minimist';
 
-let argv = minimist(process.argv.slice(2));
+let argv = minimist(process.argv.slice(2), {
+  boolean: ['print', 'colors', 'animate']
+});
 let taskName = argv._[0];
 let taskPath = join(process.cwd(), 'tasks', taskName + '.js');
 
