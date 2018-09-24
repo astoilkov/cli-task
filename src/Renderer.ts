@@ -62,12 +62,10 @@ export class Renderer {
       this.logs.push(args.map(value => toString(value)).join(' '));
     };
 
-    if (this.options.print) {
-      this.update();
-      cliCursor.hide();
-      this.intervalId = setInterval(() => this.update(), 60);
-      this.intervalId.unref();
-    }
+    this.update();
+    cliCursor.hide();
+    this.intervalId = setInterval(() => this.update(), 60);
+    this.intervalId.unref();
   }
 
   private update() {
