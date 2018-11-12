@@ -1,6 +1,6 @@
 {
   "name": "cli-task",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "repository": "https://github.com/astoilkov/cli-task",
   "description": "Task runner for developers minimalists",
   "license": "MIT",
