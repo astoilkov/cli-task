@@ -11,7 +11,7 @@ export default class Task {
     let handleError = (err?: Error) => {
       if (this.getCurrentStep()) {
         this.getCurrentStep().failure(err);
-      } else if (err instanceof Error) {
+      } else if (err) {
         throw err;
       }
 
@@ -129,8 +129,10 @@ export default class Task {
       info: (message: string) => {
         this.getCurrentStep().info = message;
       },
-      fail: (message?: string) => {
+      fail: (message?: Error | string) => {
         this.getCurrentStep().failure(message);
+
+        process.exit(1);
       }
     };
   }

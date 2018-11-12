@@ -54,11 +54,11 @@ export class Step {
   failure(err?: Error | string) {
     this.status = StepStatus.Failure;
 
-    if (err instanceof Error) {
+    if (typeof err == 'string') {
+      this.errorMessage = err;
+    } else if (typeof err.message == 'string') {
       this.error = err;
       this.errorMessage = err.message;
-    } else if (typeof err == 'string') {
-      this.errorMessage = err;
     }
   }
 }
