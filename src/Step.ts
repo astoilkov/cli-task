@@ -56,7 +56,7 @@ export class Step {
 
     if (typeof err == 'string') {
       this.errorMessage = err;
-    } else if (typeof err.message == 'string') {
+    } else if (err && typeof err.message == 'string') {
       this.error = err;
       this.errorMessage = err.message;
     }
