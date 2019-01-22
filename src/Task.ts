@@ -9,8 +9,8 @@ export default class Task {
 
   constructor() {
     let handleError = (err?: Error) => {
-      if (this.getCurrentStep()) {
-        this.getCurrentStep().failure(err);
+      if (this._getCurrentStep()) {
+        this._getCurrentStep().failure(err);
       } else if (err) {
         throw err;
       }
@@ -42,7 +42,7 @@ export default class Task {
   exec(options?: IRendererOptions) {
     new Renderer(this, options);
 
-    return this.execTasks(this);
+    return this._execTasks(this);
   }
 
   withOptions(options: { [key: string]: any; }) {
@@ -55,7 +55,7 @@ export default class Task {
     return copy;
   }
 
-  private getCurrentStep() {
+  private _getCurrentStep() {
     let queue = this.steps.slice();
 
     while (queue.length) {
@@ -71,13 +71,13 @@ export default class Task {
     }
   }
 
-  private async execTasks(task: Task) {
+  private async _execTasks(task: Task) {
     for (let i = 0; i < task.steps.length; i++) {
-      await this.execTask(task.steps[i], task.options);
+      await this._execTask(task.steps[i], task.options);
     }
   }
 
-  private execTask(step: Step, options: { [key: string]: any }) {
+  private _execTask(step: Step, options: { [key: string]: any }) {
     return new Promise((resolve, reject) => {
       step.start();
 
@@ -89,7 +89,7 @@ export default class Task {
       let result: any;
       if (step.exec) {
         try {
-          result = step.exec(this.generateState(options));
+          result = step.exec(this._generateState(options));
         } catch (err) {
           step.failure(err);
         }
@@ -102,14 +102,14 @@ export default class Task {
       } else if (result && result.then instanceof Function && result.catch instanceof Function) {
         result.then(done).catch((err: Error) => step.failure(err));
       } else if (step.child) {
-        this.execTasks(step.child).then(done);
+        this._execTasks(step.child).then(done);
       } else {
         done();
       }
     });
   }
 
-  private generateState(options: { [key: string]: any }): IStepState {
+  private _generateState(options: { [key: string]: any }): IStepState {
     let index = process.argv.indexOf('--');
     let argv: minimist.ParsedArgs;
 
@@ -127,10 +127,10 @@ export default class Task {
       set: (key: string, value: any) => this.stateValues[key] = value,
 
       info: (message: string) => {
-        this.getCurrentStep().info = message;
+        this._getCurrentStep().info = message;
       },
       fail: (message?: Error | string) => {
-        this.getCurrentStep().failure(message);
+        this._getCurrentStep().failure(message);
 
         process.exit(1);
       }
