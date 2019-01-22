@@ -48,7 +48,7 @@ export class Renderer {
     this.chalk = new chalk.constructor({ enabled: options.colors });
 
     process.on('exit', () => {
-      this.update();
+      this._update();
       cliCursor.show();
     });
 
@@ -63,13 +63,13 @@ export class Renderer {
       this.logs.push(args.map(value => toString(value)).join(' '));
     };
 
-    this.update();
+    this._update();
     cliCursor.hide();
-    this.intervalId = setInterval(() => this.update(), 60);
+    this.intervalId = setInterval(() => this._update(), 60);
     this.intervalId.unref();
   }
 
-  private update() {
+  private _update() {
     if (Date.now() - this.lastSpinnerUpdate >= 60) {
       this.lastSpinnerUpdate = Date.now();
       if (this.spinnerFrameIndex == spinnerFrames.length - 1) {
@@ -82,9 +82,9 @@ export class Renderer {
     let text = '';
 
     text += '\n';
-    text += this.getTextAtLevel(this.task, 0);
+    text += this._getTextAtLevel(this.task, 0);
 
-    text += this.getErrorsText();
+    text += this._getErrorsText();
 
     if (this.logs.length) {
       text += '\n';
@@ -102,7 +102,7 @@ export class Renderer {
     this.lastRenderedText = text;
   }
 
-  private getErrorsText() {
+  private _getErrorsText() {
     let text = '';
     let queue = [...this.task.steps];
 
@@ -121,24 +121,24 @@ export class Renderer {
     return text;
   }
 
-  private getTextAtLevel(task: Task, level: number) {
+  private _getTextAtLevel(task: Task, level: number) {
     let text = '';
 
     task.steps.forEach(step => {
       if (step.name) {
         text += ' '.repeat(level * 2);
-        text += this.getStepText(step);
+        text += this._getStepText(step);
         text += '\n';
       }
       if (step.child) {
-        text += this.getTextAtLevel(step.child, step.name ? level + 1 : level);
+        text += this._getTextAtLevel(step.child, step.name ? level + 1 : level);
       }
     });
 
     return text;
   }
 
-  private getStepText(step: Step) {
+  private _getStepText(step: Step) {
     let text = '';
 
     switch (step.status) {
