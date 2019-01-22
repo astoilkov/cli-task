@@ -82,6 +82,7 @@ export class Renderer {
     let text = '';
 
     text += '\n';
+
     text += this._getTextAtLevel(this.task, 0);
 
     text += this._getErrorsText();
@@ -142,9 +143,6 @@ export class Renderer {
     let text = '';
 
     switch (step.status) {
-      case StepStatus.Initial:
-        text += ' ';
-        break;
       case StepStatus.Running:
         text += process.platform == 'win32' || !this.options.animate
           ? this.chalk.yellow(figures.play)
@@ -157,7 +155,9 @@ export class Renderer {
         text += this.chalk.red(figures.cross);
         break;
     }
+
     text += ' ';
+
     text += step.name;
 
     if (step.status == StepStatus.Failure && step.errorMessage) {
