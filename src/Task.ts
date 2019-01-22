@@ -4,8 +4,9 @@ import { Step, IStepOptions, IStepState, StepStatus } from './Step';
 
 export default class Task {
   public steps: Step[] = [];
-  private options: { [key: string]: any; } = {};
-  private stateValues: { [key: string]: any; } = {};
+
+  private _options: { [key: string]: any; } = {};
+  private _stateValues: { [key: string]: any; } = {};
 
   constructor() {
     let handleError = (err?: Error) => {
@@ -48,9 +49,9 @@ export default class Task {
   withOptions(options: { [key: string]: any; }) {
     let copy = new Task();
 
-    copy.options = options;
+    copy._options = options;
     copy.steps = this.steps;
-    copy.stateValues = this.stateValues;
+    copy._stateValues = this._stateValues;
 
     return copy;
   }
@@ -73,7 +74,7 @@ export default class Task {
 
   private async _execTasks(task: Task) {
     for (let i = 0; i < task.steps.length; i++) {
-      await this._execTask(task.steps[i], task.options);
+      await this._execTask(task.steps[i], task._options);
     }
   }
 
@@ -123,8 +124,8 @@ export default class Task {
       argv: argv,
       options: options,
 
-      get: (key: string) => this.stateValues[key],
-      set: (key: string, value: any) => this.stateValues[key] = value,
+      get: (key: string) => this._stateValues[key],
+      set: (key: string, value: any) => this._stateValues[key] = value,
 
       info: (message: string) => {
         this._getCurrentStep().info = message;
