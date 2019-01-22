@@ -39,7 +39,7 @@ export default class Task {
     return this;
   }
 
-  exec(options?: IRendererOptions) {
+  run(options?: IRendererOptions) {
     new Renderer(this, options);
 
     return this._execTasks(this);
