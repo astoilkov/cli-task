@@ -23,18 +23,17 @@ export default class Task {
     process.on('unhandledRejection', handleError);
   }
 
-  add(step: Task | IStepOptions | ((state: IStepState) => void)) {
-    if (step instanceof Task) {
+  add(value: Task | IStepOptions | ((state: IStepState) => void)) {
+    if (value instanceof Task) {
       this.steps.push(new Step({
-        child: step
+        child: value
       }));
-    } else if (step instanceof Function) {
+    } else if (value instanceof Function) {
       this.steps.push(new Step({
-        exec: step
+        exec: value
       }));
     } else {
-      // task: ITaskOptions
-      this.steps.push(new Step(step));
+      this.steps.push(new Step(value));
     }
 
     return this;
