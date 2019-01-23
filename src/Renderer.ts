@@ -1,9 +1,9 @@
 import Task from './Task';
 import * as figures from 'figures';
+import chalk, { Chalk } from 'chalk';
 import { format, inspect } from 'util';
 import * as cliCursor from 'cli-cursor';
 import * as logUpdate from 'log-update';
-import chalk, { Chalk } from 'chalk';
 import { Step, StepStatus } from './Step';
 
 // TODO: include https://github.com/sindresorhus/term-size when not enough rows
