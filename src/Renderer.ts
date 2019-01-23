@@ -1,5 +1,6 @@
 import Task from './Task';
 import * as figures from 'figures';
+import * as minimist from 'minimist';
 import chalk, { Chalk } from 'chalk';
 import { format, inspect } from 'util';
 import * as logUpdate from 'log-update';
@@ -7,76 +8,33 @@ import { Step, StepStatus } from './Step';
 
 // TODO: include https://github.com/sindresorhus/term-size when not enough rows
 
-const spinnerFrames = [
-  '⠋',
-  '⠙',
-  '⠹',
-  '⠸',
-  '⠼',
-  '⠴',
-  '⠦',
-  '⠧',
-  '⠇',
-  '⠏'
-];
-
-export interface IRendererOptions {
-  print?: boolean;
-  colors?: boolean;
-  animate?: boolean;
-}
+const argv = minimist(process.argv.slice(2));
+const print = argv.hasOwnProperty('print') ? argv.print == 'true' : true;
+const colors = argv.hasOwnProperty('colors') ? argv.print == 'true' : process.stdout.isTTY;
+const animate = argv.hasOwnProperty('animate') ? argv.print == 'true' : process.stdout.isTTY;
+const spinnerFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 
 export class Renderer {
-  private _task: Task;
-  private _chalk: Chalk;
-  private _logs: string[] = [];
-  private _intervalId: NodeJS.Timer;
-  private _lastRenderedText: string;
-  private _options: IRendererOptions;
-  private _lastSpinnerUpdate: number;
-  private _spinnerFrameIndex: number = 0;
+  private static _task: Task;
+  private static _logs: string[] = [];
+  private static _lastRenderedText: string = '';
+  private static _spinnerFrameIndex: number = 0;
+  private static _chalk: Chalk = new chalk.constructor({ enabled: colors });
 
-  constructor(task: Task, options?: IRendererOptions) {
-    if (!options.print) {
+  public static play(task: Task) {
+    if (!print) {
       return;
     }
 
     this._task = task;
-    this._options = options;
-    this._lastSpinnerUpdate = Date.now();
-    this._chalk = new chalk.constructor({ enabled: options.colors });
-
-    process.on('exit', () => {
-      this._update();
-      logUpdate.done();
-    });
-
-    console.log = (...args: any[]) => {
-      let toString = (value: any) => {
-        if (typeof value == 'string') {
-          return format(value);
-        } else {
-          return inspect(value, { colors: true });
-        }
-      }
-      this._logs.push(args.map(value => toString(value)).join(' '));
-    };
 
     this._update();
-    this._intervalId = setInterval(() => this._update(), 60);
-    this._intervalId.unref();
+    this._overrideConsoleLog();
+    setInterval(() => this._update(), 120).unref();
+    process.on('exit', this._onProcessExit.bind(this));
   }
 
-  private _update() {
-    if (Date.now() - this._lastSpinnerUpdate >= 60) {
-      this._lastSpinnerUpdate = Date.now();
-      if (this._spinnerFrameIndex == spinnerFrames.length - 1) {
-        this._spinnerFrameIndex = 0;
-      } else {
-        this._spinnerFrameIndex += 1;
-      }
-    }
-
+  private static _update() {
     let text = '';
 
     text += '\n';
@@ -99,9 +57,12 @@ export class Renderer {
     }
 
     this._lastRenderedText = text;
+    this._spinnerFrameIndex = this._spinnerFrameIndex < spinnerFrames.length - 1
+      ? this._spinnerFrameIndex + 1
+      : 0;
   }
 
-  private _getErrorsText() {
+  private static _getErrorsText() {
     let text = '';
     let queue = [...this._task.steps];
 
@@ -120,7 +81,7 @@ export class Renderer {
     return text;
   }
 
-  private _getTextAtLevel(task: Task, level: number) {
+  private static _getTextAtLevel(task: Task, level: number) {
     let text = '';
 
     task.steps.forEach(step => {
@@ -142,12 +103,12 @@ export class Renderer {
     return text;
   }
 
-  private _getStepText(step: Step) {
+  private static _getStepText(step: Step) {
     let text = '';
 
     switch (step.status) {
       case StepStatus.Running:
-        text += process.platform == 'win32' || !this._options.animate
+        text += process.platform == 'win32' || !animate
           ? this._chalk.yellow(figures.play)
           : this._chalk.yellow(spinnerFrames[this._spinnerFrameIndex]);
         break;
@@ -170,5 +131,24 @@ export class Renderer {
     }
 
     return text;
+  }
+
+  private static _onProcessExit() {
+    this._update();
+
+    logUpdate.done();
+  }
+
+  private static _overrideConsoleLog() {
+    console.log = (...args: any[]) => {
+      let toString = (value: any) => {
+        if (typeof value == 'string') {
+          return format(value);
+        } else {
+          return inspect(value, { colors: true });
+        }
+      }
+      this._logs.push(args.map(value => toString(value)).join(' '));
+    };
   }
 }

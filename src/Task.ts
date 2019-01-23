@@ -1,5 +1,5 @@
 import * as minimist from 'minimist';
-import { Renderer, IRendererOptions } from './Renderer';
+import { Renderer } from './Renderer';
 import { Step, IStepOptions, IStepState, StepStatus } from './Step';
 
 export default class Task {
@@ -40,12 +40,6 @@ export default class Task {
     return this;
   }
 
-  run(options?: IRendererOptions) {
-    new Renderer(this, options);
-
-    return this._execTasks(this);
-  }
-
   withOptions(options: { [key: string]: any; }) {
     let copy = new Task();
 
@@ -54,6 +48,12 @@ export default class Task {
     copy._stateValues = this._stateValues;
 
     return copy;
+  }
+
+  run() {
+    Renderer.play(this);
+
+    return this._execTasks(this);
   }
 
   private _getCurrentStep() {
