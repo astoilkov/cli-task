@@ -69,27 +69,6 @@ Type: `Function`
 
 The callback function which will be executed.
 
-### task.run(options)
+### task.run()
 
-Execute the task
-
-#### options
-Type: `Object`
-
-##### print
-Type: `boolean`
-Default: `false`
-
-Print progress to the terminal
-
-##### colors
-Type: `boolean`
-Default: `false`
-
-Print colors to the terminal
-
-##### animate
-Type: `boolean`
-Default: `false`
-
-Animate the output to the terminal
+Executes the task
