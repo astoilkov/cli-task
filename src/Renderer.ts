@@ -31,9 +31,9 @@ export class Renderer {
   private _task: Task;
   private _chalk: Chalk;
   private _logs: string[] = [];
-  private _options: IRendererOptions;
   private _intervalId: NodeJS.Timer;
   private _lastRenderedText: string;
+  private _options: IRendererOptions;
   private _lastSpinnerUpdate: number;
   private _spinnerFrameIndex: number = 0;
 
