@@ -37,10 +37,10 @@
   "dependencies": {
     "@types/minimist": "1.2.0",
     "chalk": "2.4.1",
-    "cli-cursor": "2.1.0",
     "figures": "2.0.0",
     "log-update": "2.3.0",
-    "minimist": "1.2.0"
+    "minimist": "1.2.0",
+    "wrap-ansi": "4.0.0"
   },
   "devDependencies": {
     "@types/figures": "2.0.0",
