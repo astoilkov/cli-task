@@ -127,6 +127,11 @@ export class Renderer {
 
     task.steps.forEach(step => {
       if (step.name) {
+        // required in order to fix https://github.com/chalk/wrap-ansi/issues/27
+        if (step.status == StepStatus.Initial && level > 0) {
+          text += ' ';
+        }
+
         text += ' '.repeat(level * 2);
         text += this._getStepText(step);
         text += '\n';
