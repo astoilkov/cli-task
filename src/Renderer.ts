@@ -2,7 +2,6 @@ import Task from './Task';
 import * as figures from 'figures';
 import chalk, { Chalk } from 'chalk';
 import { format, inspect } from 'util';
-import * as cliCursor from 'cli-cursor';
 import * as logUpdate from 'log-update';
 import { Step, StepStatus } from './Step';
 
@@ -49,7 +48,7 @@ export class Renderer {
 
     process.on('exit', () => {
       this._update();
-      cliCursor.show();
+      logUpdate.done();
     });
 
     console.log = (...args: any[]) => {
@@ -64,7 +63,6 @@ export class Renderer {
     };
 
     this._update();
-    cliCursor.hide();
     this._intervalId = setInterval(() => this._update(), 60);
     this._intervalId.unref();
   }
