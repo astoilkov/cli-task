@@ -20,12 +20,12 @@ task()
     .add({
         name: 'init npm folder',
         exec: () => {
-        return execa('npm', [
-            'init',
-            '--force'
-        ], {
-            cwd: tmpPath
-        });
+            return execa('npm', [
+                'init',
+                '--force'
+            ], {
+                cwd: tmpPath
+            });
         }
     })
     .add({
@@ -47,11 +47,7 @@ task()
             });
         }
     })
-    .run({
-        print: true,
-        colors: true,
-        animate: true,
-    });
+    .run();
 ```
 
 ## API
