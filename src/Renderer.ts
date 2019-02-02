@@ -2,6 +2,7 @@ import Task from './Task';
 import * as figures from 'figures';
 import * as minimist from 'minimist';
 import chalk, { Chalk } from 'chalk';
+import exitHook = require('exit-hook');
 import { format, inspect } from 'util';
 import * as logUpdate from 'log-update';
 import { Step, StepStatus } from './Step';
@@ -30,8 +31,8 @@ export class Renderer {
 
     this._update();
     this._overrideConsoleLog();
+    exitHook(this._exitHook.bind(this));
     setInterval(() => this._update(), 120).unref();
-    process.on('exit', this._onProcessExit.bind(this));
   }
 
   private static _update() {
@@ -133,7 +134,7 @@ export class Renderer {
     return text;
   }
 
-  private static _onProcessExit() {
+  private static _exitHook() {
     this._update();
 
     logUpdate.done();
