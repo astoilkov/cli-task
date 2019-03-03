@@ -15,8 +15,8 @@
     "cli-task": "src/cli.js"
   },
   "scripts": {
-    "prepare": "tsc",
     "tsc": "tsc --watch"
+    "build": "tsc",
   },
   "engines": {
     "node": ">=8"
