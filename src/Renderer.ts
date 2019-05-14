@@ -11,8 +11,8 @@ import { Step, StepStatus } from './Step';
 
 const argv = minimist(process.argv.slice(2));
 const print = argv.hasOwnProperty('print') ? argv.print == 'true' : true;
-const colors = argv.hasOwnProperty('colors') ? argv.print == 'true' : process.stdout.isTTY;
-const animate = argv.hasOwnProperty('animate') ? argv.print == 'true' : process.stdout.isTTY;
+const colors = argv.hasOwnProperty('colors') ? argv.colors == 'true' : process.stdout.isTTY;
+const animate = argv.hasOwnProperty('animate') ? argv.animate == 'true' : process.stdout.isTTY;
 const spinnerFrames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 
 export class Renderer {
