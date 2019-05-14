@@ -36,6 +36,6 @@ if (isTask(task)) {
 }
 
 function isTask(obj: any) {
-  return obj && typeof obj.exec == 'function' && typeof obj.add == 'function' &&
+  return obj && typeof obj.add == 'function' &&
     typeof obj.withOptions == 'function' && Array.isArray(obj.steps);
 }
