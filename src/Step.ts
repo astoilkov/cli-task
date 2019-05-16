@@ -1,4 +1,5 @@
 import Task from './Task';
+import { types } from 'util';
 import { ParsedArgs } from 'minimist';
 
 export interface IStepOptions {
@@ -31,6 +32,7 @@ export class Step {
   public name: string;
   public info: string;
   public error: Error;
+  public errorObject: any;
   public concurrent: boolean;
   public errorMessage: string;
   public exec: (state: IStepState) => void;
@@ -51,14 +53,16 @@ export class Step {
     this.status = StepStatus.Success;
   }
 
-  failure(err?: Error | string) {
+  failure(err?: string | Error | object) {
     this.status = StepStatus.Failure;
 
     if (typeof err == 'string') {
       this.errorMessage = err;
-    } else if (err && typeof err.message == 'string') {
+    } else if (types.isNativeError(err)) {
       this.error = err;
       this.errorMessage = err.message;
+    } else if (typeof err === 'object') {
+      this.errorObject = err
     }
   }
 }

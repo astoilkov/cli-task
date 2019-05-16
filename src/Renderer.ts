@@ -72,6 +72,8 @@ export class Renderer {
 
       if (step.error) {
         text += inspect(step.error, { colors: true });
+      } else if (step.errorObject) {
+        text += inspect(step.errorObject, { colors: true });
       }
 
       if (step.child) {

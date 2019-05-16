@@ -1,3 +1,4 @@
+import { types } from 'util';
 import * as minimist from 'minimist';
 import { Renderer } from './Renderer';
 import { Step, IStepOptions, IStepState, StepStatus } from './Step';
@@ -9,18 +10,12 @@ export default class Task {
   private _stateValues: { [key: string]: any; } = {};
 
   constructor() {
-    let handleError = (err?: Error) => {
-      if (this._getCurrentStep()) {
-        this._getCurrentStep().failure(err);
-      } else if (err) {
-        throw err;
-      }
-
-      process.exit(1);
-    };
-
-    process.on('uncaughtException', handleError);
-    process.on('unhandledRejection', handleError);
+    process.on('uncaughtException', (err) =>
+      this._errorOut(this._getCurrentStep(), err)
+    );
+    process.on('unhandledRejection', (message) =>
+      this._errorOut(this._getCurrentStep(), message)
+    );
   }
 
   add(value: Task | IStepOptions | ((state: IStepState) => void)) {
@@ -53,6 +48,16 @@ export default class Task {
     Renderer.play(this);
 
     return this._execTasks(this);
+  }
+
+  private _errorOut(step: Step, err?: Error | string | {}) {
+    process.exitCode = 1
+
+    if (step) {
+      step.failure(err)
+    } else if (types.isNativeError(err)) {
+      throw err
+    }
   }
 
   private _getCurrentStep() {
@@ -91,7 +96,7 @@ export default class Task {
         try {
           result = step.exec(this._generateState(options));
         } catch (err) {
-          step.failure(err);
+          this._errorOut(step, err)
         }
       }
 
@@ -100,7 +105,7 @@ export default class Task {
       } else if (step.concurrent) {
         resolve();
       } else if (result && result.then instanceof Function && result.catch instanceof Function) {
-        result.then(done).catch((err: Error) => step.failure(err));
+        result.then(done).catch((err: Error) => this._errorOut(step, err));
       } else if (step.child) {
         this._execTasks(step.child).then(done);
       } else {
@@ -130,9 +135,7 @@ export default class Task {
         this._getCurrentStep().info = message;
       },
       fail: (message?: Error | string) => {
-        this._getCurrentStep().failure(message);
-
-        process.exit(1);
+        this._errorOut(this._getCurrentStep(), message)
       }
     };
   }
