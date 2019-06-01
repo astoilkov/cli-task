@@ -16,8 +16,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "tsc": "tsc --watch",
-    "publish": "np"
+    "tsc": "tsc --watch"
   },
   "engines": {
     "node": ">=8"
