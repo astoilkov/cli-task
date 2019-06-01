@@ -1,5 +1,8 @@
+# dirs
 node_modules
 
+# files
+yarn.lock
 *.js
 *.js.map
 *.d.ts
