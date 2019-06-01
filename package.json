@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "tsc": "tsc --watch"
+    "tsc": "tsc --watch",
+    "publish": "np"
   },
   "engines": {
     "node": ">=8"
@@ -46,6 +47,7 @@
     "@types/figures": "2.0.0",
     "@types/log-update": "2.0.0",
     "@types/minimist": "1.2.0",
+    "np": "5.0.2",
     "typescript": "2.9.2"
   }
 }
