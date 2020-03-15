@@ -39,7 +39,7 @@
     "exit-hook": "2.0.0",
     "figures": "2.0.0",
     "log-update": "3.0.0",
-    "minimist": "1.2.0"
+    "minimist": "1.2.5"
   },
   "devDependencies": {
     "@types/exit-hook": "1.1.0",
